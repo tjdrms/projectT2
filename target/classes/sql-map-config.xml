@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration PUBLIC 
+  "-//mybatis.org//DTD Config 3.0//EN" 
+  "http://mybatis.org/dtd/mybatis-3-config.dtd">
+
+<configuration>
+  <typeAliases>
+    <typeAlias alias="member"  type="com.korea.k2.shop.MemberVO" />  
+    <typeAlias alias="money"  type="com.korea.k2.shop.MoneyVO" />  
+    <typeAlias alias="openapi" type="com.korea.k2.company.CompanyVO" />
+    <typeAlias alias="EV" type="com.korea.k2.charge.EVSearchVO" />
+    <typeAlias alias="product" type="com.korea.k2.product.ProductVO" />
+    <typeAlias alias="cart" type="com.korea.k2.cart.CartVO" />
+    <typeAlias alias="jumun" type="com.korea.k2.order.OrderJumunVO" />
+    <typeAlias alias="order" type="com.korea.k2.order.OrderMoneyVO" />
+
+  </typeAliases>
+
+  <mappers>
+    <mapper resource="mappings/shop-mapping.xml"  />
+    <mapper resource="mappings/openapi-mapping.xml" />
+    <mapper resource="mappings/EV-mapping.xml" />
+    <mapper resource="mappings/product-mapping.xml" />
+    <mapper resource="mappings/cart-mapping.xml" />
+  </mappers>
+</configuration>

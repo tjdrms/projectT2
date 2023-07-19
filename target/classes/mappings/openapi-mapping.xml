@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper 
+PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="CompanyDao">
+	<insert id="insertCompany" parameterType="openapi">
+		<selectKey keyProperty="idx" resultType="int" order="BEFORE">
+			select seq_company.nextval from dual
+		</selectKey>
+		insert into company (idx, rdnmadr, logitude, entrprsNm, rprsntvNm, latitude, mainGoods) values(#{idx}, #{rdnmadr}, #{logitude}, #{entrprsNm}, #{rprsntvNm}, #{latitude}, #{mainGoods})
+	</insert>
+	
+	<select id="selectAllCompany" resultType="openapi">
+		select * from company
+	</select>
+	
+	<select id="selectOneCompany" resultType="openapi" parameterType="openapi">
+		select * from company where entrprsNm = #{entrprsNm}
+	</select>
+	
+	<select id="selectOneCompany2" resultType="openapi" parameterType="openapi">
+		select * from company where idx = #{idx}
+	</select>
+</mapper>

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="CartDao">
+	<insert id="insertCart" parameterType="cart">
+		insert into cart(cartId, custno, productId, amount) values(seq_cart2.nextval, #{custno}, #{productId}, #{amount})
+	</insert>
+	
+	<select id="selectAllCart" resultType="cart" parameterType="cart">
+		select cartId, c.productId as productId, productName, productPrice, amount, productImg
+		from cart c join productTBL p
+		on c.productId = p.productId
+		where custno = #{custno}
+		order by cartId asc
+	</select>
+	
+	<select id="selectCustnoCount" resultType="int" parameterType="cart">
+		select count(*) from cart where custno = #{custno}
+	</select>
+	
+	<delete id="deleteOneCart" parameterType="cart">
+		delete from cart where cartId = #{cartId} and custno = #{custno}
+	</delete>
+	
+	<delete id="deleteAllCart" parameterType="cart">
+		delete from cart where custno = #{custno}
+	</delete>
+	
+	<update id="updateCart" parameterType="cart">
+		update cart set amount = #{amount} where cartId = #{cartId}
+	</update>
+	
+	<insert id="insertOrderJumun" parameterType="jumun">
+		insert into orderJumun(idx, cartId, custno, productId, productName, amount, orderG) values(seq_jumun.nextval, #{cartId}, #{custno}, #{productId}, #{productName}, #{amount}, #{orderG})
+	</insert>
+	
+	<insert id="insertOrderMoney" parameterType="order">
+		insert into orderMoney(idx, custno, baesongbi, totalMoney) values(seq_order.nextval, #{custno2}, #{baesongbi}, #{totalMoney})
+	</insert>
+	
+	<select id="selectOrderG" resultType="int" parameterType="order">
+		select max(idx) idx from orderMoney where custno = #{custno2}
+	</select>
+	
+	<select id="selectOrderMoney" resultType="order">
+		select idx, custno as custno2, baesongbi, totalMoney, getDate from orderMoney
+	</select>
+	
+	<select id="selectOrderEdit" resultType="jumun" parameterType="jumun">
+		select J.idx as idx, productId, productName, amount from orderMoney M join orderJumun J
+		on M.idx = J.orderG
+		where orderG = #{orderG}
+		order by J.idx asc
+	</select>
+	
+</mapper>

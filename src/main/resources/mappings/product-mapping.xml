@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="ProductDao">
+	<insert id="insertProduct" parameterType="product">
+		<selectKey keyProperty="productId" resultType="int" order="BEFORE">
+			select seq_productTBL.nextval from dual
+		</selectKey>
+		insert into productTBL(productId,productName,productPrice,productDesc,productImg) values(#{productId},#{productName},#{productPrice},#{productDesc},#{productImgStr})
+	</insert>
+	
+	<select id="selectAllProduct" resultType="product">
+		select productId, productName, productPrice, productDesc, productImg as productImgStr, productDate from productTBL order by productId asc
+	</select>
+	
+	<select id="selectOneProduct" resultType="product" parameterType="product">
+		select productId, productName, productPrice, productDesc, productImg as productImgStr, productDate from productTBL where productId = #{productId}
+	</select>
+	
+	<select id="selectImgProduct" resultType="product" parameterType="product">
+		select productImg as productImgStr from productTBL where productId = #{productId}
+	</select>
+	
+	<delete id="deleteProduct" parameterType="product">
+		delete from productTBL where productId = #{productId}
+	</delete>
+	
+	<update id="updateProduct" parameterType="product">
+		update productTBL set productName = #{productName}, productPrice = #{productPrice}, productDesc = #{productDesc}, productImg = #{productImgStr} where productId = #{productId}
+	</update>
+</mapper>

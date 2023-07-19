@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="EVSearchDao">
+	<insert id="insertEV" parameterType="EV">
+		<selectKey keyProperty="idx" resultType="int" order="BEFORE">
+			select seq_company.nextval from dual
+		</selectKey>
+		insert into EVSearch (idx, csNm, addr, cpNm, cpStat) values(#{idx}, #{csNm}, #{addr}, #{cpNm}, #{cpStat})
+	</insert>
+	
+	<select id="selectAllEV" resultType="EV">
+		select * from EVSearch where addr like '%제주%' 
+	</select>
+	
+	<select id="editEV" resultType="EV" parameterType="EV">
+		select * from EVSearch where idx = #{idx}
+	</select>
+	
+	<delete id="deleteEV">
+		delete from EVSearch
+	</delete>
+</mapper>
